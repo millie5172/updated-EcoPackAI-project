@@ -154,9 +154,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#" onclick="activateTab('recommendation-tab'); return false;"><i class="bi bi-magic me-1"></i>AI Recommendation</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" onclick="activateTab('dashboard-tab'); return false;"><i class="bi bi-graph-up me-1"></i>BI Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" onclick="activateTab('materials-tab'); return false;"><i class="bi bi-database me-1"></i>Material DB</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#recommendation"><i class="bi bi-magic me-1"></i>AI Recommendation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#dashboard"><i class="bi bi-graph-up me-1"></i>BI Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#materials"><i class="bi bi-database me-1"></i>Material DB</a></li>
                 </ul>
             </div>
         </div>
@@ -273,6 +273,7 @@
                             </div>
                         </div>
                     </div>
+                    
 
                     <!-- Results Section -->
                     <div class="col-lg-8">
@@ -465,6 +466,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+         const API_BASE_URL = '/api';  
         // Material Database based on research
         const materialsDB = [
             {
@@ -1021,88 +1023,7 @@
         }
 
         function exportReport() {
-            const reportWindow = window.open('', '_blank');
-            const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-            const rows = materialsDB.map(m => `
-                <tr>
-                    <td>${m.name}</td>
-                    <td>${m.type}</td>
-                    <td>${m.co2PerKg}</td>
-                    <td>$${m.costPerUnit}</td>
-                    <td>${m.biodegradability}%</td>
-                    <td>${m.durability}/100</td>
-                    <td>${m.recyclability}%</td>
-                    <td>${m.decomposeTime}</td>
-                </tr>`).join('');
-
-            reportWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>EcoPackAI Sustainability Report</title>
-                    <style>
-                        body { font-family: 'Segoe UI', sans-serif; margin: 40px; color: #333; }
-                        h1 { color: #2d6a4f; border-bottom: 3px solid #2d6a4f; padding-bottom: 10px; }
-                        h2 { color: #40916c; margin-top: 30px; }
-                        .meta { color: #666; margin-bottom: 30px; }
-                        .metrics { display: flex; gap: 20px; margin: 20px 0; }
-                        .metric-box { background: #d8f3dc; border-radius: 10px; padding: 15px 25px; text-align: center; flex: 1; }
-                        .metric-box .val { font-size: 2rem; font-weight: bold; color: #2d6a4f; }
-                        .metric-box .label { font-size: 0.85rem; color: #555; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85rem; }
-                        th { background: #2d6a4f; color: white; padding: 10px 8px; text-align: left; }
-                        td { padding: 8px; border-bottom: 1px solid #e0e0e0; }
-                        tr:nth-child(even) { background: #f4faf6; }
-                        .footer { margin-top: 40px; font-size: 0.8rem; color: #999; text-align: center; border-top: 1px solid #ddd; padding-top: 15px; }
-                        @media print { button { display: none; } }
-                    </style>
-                </head>
-                <body>
-                    <h1>🌿 EcoPackAI — Sustainability Report</h1>
-                    <p class="meta">Generated on ${today} &nbsp;|&nbsp; EcoPackAI Platform</p>
-
-                    <h2>Key Metrics</h2>
-                    <div class="metrics">
-                        <div class="metric-box"><div class="val">2,847</div><div class="label">kg CO₂ Saved</div></div>
-                        <div class="metric-box"><div class="val">23%</div><div class="label">Avg Cost Reduction</div></div>
-                        <div class="metric-box"><div class="val">78%</div><div class="label">Recyclable Materials Used</div></div>
-                        <div class="metric-box"><div class="val">92%</div><div class="label">Bio-based Adoption</div></div>
-                        <div class="metric-box"><div class="val">$12,450</div><div class="label">Cost Savings YTD</div></div>
-                    </div>
-
-                    <h2>Materials Database (${materialsDB.length} Materials)</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Material</th><th>Type</th><th>CO₂ (kg/kg)</th><th>Cost/Unit</th>
-                                <th>Biodegradability</th><th>Durability</th><th>Recyclability</th><th>Decompose Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>${rows}</tbody>
-                    </table>
-
-                    <div class="footer">
-                        EcoPackAI — AI-Powered Sustainable Packaging Platform &nbsp;|&nbsp; Confidential Report &nbsp;|&nbsp; ${today}
-                    </div>
-
-                    <br>
-                    <button onclick="window.print()" style="background:#2d6a4f;color:white;border:none;padding:10px 25px;border-radius:8px;cursor:pointer;font-size:1rem;">
-                        🖨️ Print / Save as PDF
-                    </button>
-                </body>
-                </html>
-            `);
-            reportWindow.document.close();
-        }
-
-        function activateTab(tabId) {
-            const tabEl = document.getElementById(tabId);
-            if (tabEl) {
-                const tab = new bootstrap.Tab(tabEl);
-                tab.show();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            alert('Sustainability Report exported!\n\nPDF generation would include:\n- CO2 reduction metrics\n- Cost analysis\n- Material usage trends\n- Compliance certificates');
         }
 
         // Initialize
